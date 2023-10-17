@@ -1,0 +1,11 @@
+# General
+
+# Build files and directories
+**/CMakeFiles*
+**/build*
+.vscode
+*.sln*
+*.vcxproj*
+*.json*
+*.cmake*
+**/CMakeCache.txt
