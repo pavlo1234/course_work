@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.26)
 
 project(ServerApp)
 
-set(CMAKE_PREFIX_PATH "build")
-find_package(Poco REQUIRED)
+find_package(Poco REQUIRED COMPONENTS Net Foundation Util)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
-target_link_libraries(${PROJECT_NAME} Poco::Net)
+target_include_directories(${PROJECT_NAME} BEFORE PRIVATE ${Poco_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} Poco::Net Poco::Foundation Poco::Util)
