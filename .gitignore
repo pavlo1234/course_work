@@ -3,6 +3,7 @@
 # Build files and directories
 **/CMakeFiles*
 **/build*
+**/bin
 .vscode
 *.sln*
 *.vcxproj*

@@ -6,48 +6,42 @@ project(ClientApp)
 set(Qt6_DIR "C:\\Qt\\6.5.1\\msvc2019_64\\lib\\cmake\\Qt6")
 set(Qt6_SHARED_LIB_DIR "C:\\Qt\\6.5.1\\msvc2019_64\\bin")
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Gui Quick)
 
 qt_standard_project_setup()
 
-qt_add_executable(appproject_qml2
+qt_add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
-qt_add_qml_module(appproject_qml2
-    URI project_qml2
-    VERSION 1.0
+qt_add_qml_module(${PROJECT_NAME}
+    URI main
     QML_FILES
-    ui/LoginWindow.qml
-    ui/MainWindow.qml
-    ui/main_window/Header.qml
-    ui/main_window/header/Info.qml
-    ui/main_window/header/info/Logo.qml
-    ui/main_window/header/info/Profile.qml
-    ui/main_window/header/info/SwitchButton.qml
-    ui/main_window/header/ConfigLine.qml
-    ui/main_window/header/HMenu.qml
-    ui/main_window/header/menu/CategoryItem.qml
-    ui/main_window/SideBar.qml
+        ui/qml/main.qml
 )
 
-qt_add_resources(appproject_qml2 "app_images"
-    PREFIX "/"
-    FILES
-        assets/images/login_window/SH.png
-        assets/images/login_window/FB.svg
-        assets/images/login_window/Gmail.svg
-        assets/images/login_window/x.svg
-        assets/images/main_window/header/info/switcher.svg
-        assets/images/main_window/header/hmenu/left-arrow.svg
-        assets/images/main_window/header/hmenu/left-arrow-active.svg
-        assets/images/main_window/header/hmenu/right-arrow-active.svg
-        assets/fonts/SF-Pro-Text-Bold.otf
-        assets/fonts/Roboto-Medium.ttf
-        assets/fonts/Roboto-Bold.ttf
+target_link_directories(${PROJECT_NAME}
+    PRIVATE ${Qt6_SHARED_LIB_DIR}
 )
 
-
-target_link_libraries(appproject_qml2
-    PRIVATE Qt6::Quick
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE Qt6::Quick Qt6::Gui
 )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    MACOSX_BUNDLE ON
+    WIN32_EXECUTABLE ON
+)
+
+set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/bin)
+
+INSTALL(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+)
+
+qt_generate_deploy_qml_app_script(
+    TARGET ${PROJECT_NAME}
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
