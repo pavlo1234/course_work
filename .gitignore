@@ -10,3 +10,5 @@
 *.json*
 *.cmake*
 **/CMakeCache.txt
+
+*.bat
