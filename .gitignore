@@ -7,3 +7,4 @@
 *.vcxproj*
 CMakeUserPresets.json
 *.cmake*
+*.bat*
